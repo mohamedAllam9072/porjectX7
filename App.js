@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 
 import {
   Button,
@@ -11,51 +10,25 @@ import {
 } from 'react-native';
 
 export default function App() {
+  const [inputText, setInputText] = useState('');
+  const [courseGoals, setCourseGoals] = useState([]);
+  function goalInputHandler(enteredText) {
+    setInputText(enteredText);
+  }
+  function addGoalHandler() {
+    setCourseGoals(currentCourseGoals => [...courseGoals, inputText]); // '...courseGoals' means keep list items and append with 'inputText'
+  }
   return (
     <View style={styles.appContainer}>
       <View style={styles.inputCountainer}>
-        <TextInput style={styles.inputText} placeholder="your course goal" />
-        <Button title="Add Goal" />
+        <TextInput
+          style={styles.inputText}
+          placeholder="your course goal"
+          onChangeText={goalInputHandler} // we don't put () becouse of we need to execute this method every time  text changes
+        />
+        <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
-      <View>
-        <Text> List Of Goals </Text>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'stretch', //stretch = fill crossAxis from top to buttom
-          width: '100%',
-          height: 300,
-        }}>
-        <View
-          style={{
-            flex: 1, //flex working in flexbox only it's like weight in android
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'red',
-          }}>
-          <Text> 1</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'green',
-          }}>
-          <Text> 2</Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'blue',
-          }}>
-          <Text> 3</Text>
-        </View>
-      </View>
+      <View style={styles.scrollTextview}>{courseGoals.map(_goal => {})}</View>
       <StatusBar style="auto" />
     </View>
   );
@@ -64,22 +37,29 @@ export default function App() {
 const styles = StyleSheet.create({
   /**
    *     flexDirection: 'row', //equal vertical oraintion in android
-          justifyContent: '', //handle childs inside container in mainAxis from left to right 
+          justifyContent: '', //handle childs inside container in mainAxis from left to right
           alignItems: '', //handle childs inside container in crossAxis from top to bottom
    */
   appContainer: {
+    flex: 1,
     padding: 10,
   },
   inputCountainer: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
+    borderBottomColor: '#cccccc',
+    borderBottomWidth: 1,
+    marginBottom: 10,
   },
   inputText: {
+    flex: 1,
     borderWidth: 1,
     borderColor: '#cccccc',
-    width: '80%',
+    width: '70%',
     marginRight: 8,
     padding: 8,
+    marginBottom: 10,
   },
   flexBox: {
     flex: 1, // means take all space of screen like weight in android
@@ -93,8 +73,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textview: {
-    margin: 10,
-    padding: 10,
+    color: '#000000',
+    backgroundColor: '#00ff00',
+  },
+  scrollTextview: {
+    flex: 5,
     borderColor: 'red',
     borderWidth: 1,
   },
