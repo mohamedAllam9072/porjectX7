@@ -16,7 +16,7 @@ export default function App() {
     setInputText(enteredText);
   }
   function addGoalHandler() {
-    setCourseGoals(currentCourseGoals => [...courseGoals, inputText]); // '...courseGoals' means keep list items and append with 'inputText'
+    setCourseGoals(currentCourseGoals => [...currentCourseGoals, inputText]); // '...courseGoals' means keep list items and append with 'inputText'
   }
   return (
     <View style={styles.appContainer}>
@@ -28,7 +28,11 @@ export default function App() {
         />
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
-      <View style={styles.scrollTextview}>{courseGoals.map(_goal => {})}</View>
+      <View style={styles.scrollTextview}>
+        {courseGoals.map(goal => (
+          <Text style={styles.textview}>{goal}</Text>
+        ))}
+      </View>
       <StatusBar style="auto" />
     </View>
   );
