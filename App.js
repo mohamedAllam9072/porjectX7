@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {
   Button,
+  ScrollView,
   StatusBar,
   StyleSheet,
   Text,
@@ -28,13 +29,13 @@ export default function App() {
         />
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
-      <View style={styles.scrollTextview}>
+      <ScrollView style={styles.scrollTextview}>
         {courseGoals.map(goal => (
           <View style={styles.goalItem} key={goal}>
             <Text style={styles.textview}>{goal}</Text>
           </View>
         ))}
-      </View>
+      </ScrollView>
       <StatusBar style="auto" />
     </View>
   );
