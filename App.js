@@ -30,7 +30,9 @@ export default function App() {
       </View>
       <View style={styles.scrollTextview}>
         {courseGoals.map(goal => (
-          <Text style={styles.textview}>{goal}</Text>
+          <View style={styles.goalItem} key={goal}>
+            <Text style={styles.textview}>{goal}</Text>
+          </View>
         ))}
       </View>
       <StatusBar style="auto" />
@@ -77,8 +79,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   textview: {
-    color: '#000000',
-    backgroundColor: '#00ff00',
+    color: '#FFFFFF',
+  },
+  goalItem: {
+    margin: 4,
+    padding: 4,
+    borderRadius: 8,
+    backgroundColor: '#000000',
   },
   scrollTextview: {
     flex: 5,
