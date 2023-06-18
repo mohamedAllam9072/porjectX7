@@ -44,7 +44,7 @@ export default function App() {
         ))}
       </ScrollView> */}
 
-      {/* HINT :::: handle list using FlatListÍ */}
+      {/* HINT :::: handle list using FlatList */}
       <FlatList
         style={styles.scrollTextview}
         data={courseGoals}
