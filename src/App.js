@@ -1,39 +1,23 @@
 import React, {useState} from 'react';
-
-import {
-  Button,
-  FlatList,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from 'react-native';
-
+import {FlatList, StatusBar, StyleSheet, View} from 'react-native';
+import GoalItem from './components/GoalItem';
+import GoalInput from './components/GoalInput';
 export default function App() {
-  const [inputText, setInputText] = useState('');
   const [courseGoals, setCourseGoals] = useState([]);
-  function goalInputHandler(enteredText) {
-    setInputText(enteredText);
-  }
-  function addGoalHandler() {
+  function addGoalHandler(inputText) {
     setCourseGoals(currentCourseGoals => [
       ...currentCourseGoals,
       {text: inputText, id: Math.random().toString()},
     ]); // '...courseGoals' means keep list items and append with 'inputText'
   }
+  function deleteGoalHandler(id) {
+    setCourseGoals(currentCourseGoals => {
+      return currentCourseGoals.filter(goal => goal.id !== id); //if id is true filter = delete the goal from list
+    });
+  }
   return (
     <View style={styles.appContainer}>
-      <View style={styles.inputCountainer}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="your course goal"
-          onChangeText={goalInputHandler} // we don't put () becouse of we need to execute this method every time  text changes
-        />
-        <Button title="Add Goal" onPress={addGoalHandler} />
-      </View>
-
+      <GoalInput onAddGoal={addGoalHandler} />
       {/* HINT :::: handle list using scroll view */}
 
       {/* <ScrollView style={styles.scrollTextview}>
@@ -50,9 +34,11 @@ export default function App() {
         data={courseGoals}
         renderItem={itemData => {
           return (
-            <View style={styles.goalItem}>
-              <Text style={styles.textview}>{itemData.item.text}</Text>
-            </View>
+            <GoalItem
+              text={itemData.item.text}
+              id={itemData.item.id}
+              onDeleteGoal={deleteGoalHandler}
+            />
           );
         }}
         keyExtractor={(item, index) => {
@@ -74,23 +60,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  inputCountainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomColor: '#cccccc',
-    borderBottomWidth: 1,
-    marginBottom: 10,
-  },
-  inputText: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: '#cccccc',
-    width: '70%',
-    marginRight: 8,
-    padding: 8,
-    marginBottom: 10,
-  },
   flexBox: {
     flex: 1, // means take all space of screen like weight in android
     flexDirection: 'column', // flexDirection like oraination in android, column = vertival , row = horizontail
@@ -101,15 +70,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  textview: {
-    color: '#FFFFFF',
-  },
-  goalItem: {
-    margin: 4,
-    padding: 4,
-    borderRadius: 8,
-    backgroundColor: '#000000',
   },
   scrollTextview: {
     flex: 5,
