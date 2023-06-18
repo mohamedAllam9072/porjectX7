@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 
 import {
   Button,
+  FlatList,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -17,7 +18,10 @@ export default function App() {
     setInputText(enteredText);
   }
   function addGoalHandler() {
-    setCourseGoals(currentCourseGoals => [...currentCourseGoals, inputText]); // '...courseGoals' means keep list items and append with 'inputText'
+    setCourseGoals(currentCourseGoals => [
+      ...currentCourseGoals,
+      {text: inputText, id: Math.random().toString()},
+    ]); // '...courseGoals' means keep list items and append with 'inputText'
   }
   return (
     <View style={styles.appContainer}>
@@ -29,13 +33,32 @@ export default function App() {
         />
         <Button title="Add Goal" onPress={addGoalHandler} />
       </View>
-      <ScrollView style={styles.scrollTextview}>
+
+      {/* HINT :::: handle list using scroll view */}
+
+      {/* <ScrollView style={styles.scrollTextview}>
         {courseGoals.map(goal => (
           <View style={styles.goalItem} key={goal}>
             <Text style={styles.textview}>{goal}</Text>
           </View>
         ))}
-      </ScrollView>
+      </ScrollView> */}
+
+      {/* HINT :::: handle list using FlatListÍ */}
+      <FlatList
+        style={styles.scrollTextview}
+        data={courseGoals}
+        renderItem={itemData => {
+          return (
+            <View style={styles.goalItem}>
+              <Text style={styles.textview}>{itemData.item.text}</Text>
+            </View>
+          );
+        }}
+        keyExtractor={(item, index) => {
+          return item.id;
+        }}
+      />
       <StatusBar style="auto" />
     </View>
   );
