@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
    */
   appContainer: {
     flex: 1,
-    padding: 10,
+    padding: 4,
   },
   flexBox: {
     flex: 1, // means take all space of screen like weight in android
@@ -73,7 +73,10 @@ const styles = StyleSheet.create({
   },
   scrollTextview: {
     flex: 5,
-    borderColor: 'red',
+    borderColor: '#dda126',
     borderWidth: 1,
+    margin: 10,
+    borderRadius: 10,
+    backgroundColor: '#dda12616',
   },
 });
