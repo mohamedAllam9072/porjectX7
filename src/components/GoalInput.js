@@ -5,6 +5,7 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Modal,
 } from 'react-native';
 import {useState} from 'react';
 function GoalInput(props) {
@@ -17,22 +18,24 @@ function GoalInput(props) {
     setInputText('');
   }
   return (
-    <View style={styles.inputCountainer}>
-      <TextInput
-        style={styles.inputText}
-        placeholder="Enter your course goal"
-        onChangeText={goalInputHandler} // we don't put () becouse of we need to execute this method every time  text changes
-        value={inputText}
-      />
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button} onPress={addGoalHandler}>
-          <Text style={styles.buttonText}>Add Goal</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={addGoalHandler}>
-          <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
+    <Modal visible={props.visible} animationType="fade">
+      <View style={styles.inputCountainer}>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Enter your course goal"
+          onChangeText={goalInputHandler} // we don't put () becouse of we need to execute this method every time  text changes
+          value={inputText}
+        />
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={addGoalHandler}>
+            <Text style={styles.buttonText}>Add Goal</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={props.onCancel}>
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </Modal>
   );
 }
 
@@ -61,7 +64,7 @@ const styles = StyleSheet.create({
     width: '90%',
     margin: 4,
     padding: 8,
-    borderColor:'#46a35c',
+    borderColor: '#46a35c',
     backgroundColor: '#46a35c',
     borderRadius: 10,
     borderWidth: 1,
