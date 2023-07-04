@@ -1,5 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {StyleSheet, View, TextInput, Button} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  Modal,
+} from 'react-native';
 import {useState} from 'react';
 function GoalInput(props) {
   const [inputText, setInputText] = useState('');
@@ -11,35 +18,65 @@ function GoalInput(props) {
     setInputText('');
   }
   return (
-    <View style={styles.inputCountainer}>
-      <TextInput
-        style={styles.inputText}
-        placeholder="your course goal"
-        onChangeText={goalInputHandler} // we don't put () becouse of we need to execute this method every time  text changes
-        value={inputText}
-      />
-      <Button title="Add Goal" onPress={addGoalHandler} />
-    </View>
+    <Modal visible={props.visible} animationType="fade">
+      <View style={styles.inputCountainer}>
+        <TextInput
+          style={styles.inputText}
+          placeholder="Enter your course goal"
+          onChangeText={goalInputHandler} // we don't put () becouse of we need to execute this method every time  text changes
+          value={inputText}
+        />
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={addGoalHandler}>
+            <Text style={styles.buttonText}>Add Goal</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={props.onCancel}>
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
   );
 }
 
 export default GoalInput;
 const styles = StyleSheet.create({
   inputCountainer: {
-    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderBottomColor: '#cccccc',
-    borderBottomWidth: 1,
-    marginBottom: 10,
+    borderColor: '#46a35c',
+    borderWidth: 1,
+    borderRadius: 10,
+    margin: 8,
+    backgroundColor: '#d2d5dbe6',
   },
   inputText: {
-    flex: 1,
+    textAlign: 'center',
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#cccccc',
-    width: '70%',
-    marginRight: 8,
+    borderColor: '#46a35c',
+    width: '90%',
+    margin: 8,
+    backgroundColor: '#FFFFFF',
+  },
+  button: {
+    flex: 1,
+    width: '90%',
+    margin: 4,
     padding: 8,
-    marginBottom: 10,
+    borderColor: '#46a35c',
+    backgroundColor: '#46a35c',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    margin: 8,
+    padding: 8,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 18,
   },
 });
